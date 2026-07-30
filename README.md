@@ -1,13 +1,14 @@
+
 # ProjectIntake — Smart Failure Detection: Market Intelligence Module
 
 Milestone 1 deliverable: **Data Collection & Market Intelligence**.
 
-- Startup / project submission form (name, sector, business model, target market, budget, description)
-- Live market analysis (TAM / SAM / SOM sizing + growth trend chart) that updates as you fill the form
-- Competitor landscape module (market share, revenue, growth, position) per sector
-- Automated Risk Assessment (Market / Competitive / Financial / Technical / Regulatory)
-- Recommendations engine driven by the risk output
-- Dashboard summary with SOM capture trajectory and a launch-readiness gauge
+Startup / project submission form (name, sector, business model, target market, budget, description)
+Live market analysis (TAM / SAM / SOM sizing + growth trend chart) that updates as you fill the form
+Competitor landscape module (market share, revenue, growth, position) per sector
+Automated Risk Assessment (Market / Competitive / Financial / Technical / Regulatory)
+Recommendations engine driven by the risk output
+Dashboard summary with SOM capture trajectory and a launch-readiness gauge
 
 ## Stack
 
@@ -111,3 +112,4 @@ since they only consume the shape of the returned objects.
 
 To add a sector, add an entry to `SECTORS` in `src/data/sectors.js` with `tamCr`, `samShare`,
 `somShare`, `tamGrowth`, `samGrowth`, and a `competitors` array.
+
