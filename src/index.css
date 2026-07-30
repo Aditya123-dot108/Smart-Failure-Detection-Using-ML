@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------- Base ---------------- */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-fg-hi font-body antialiased;
+
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.03) 1px, transparent 0),
+    radial-gradient(circle at top right, rgba(212,175,55,.05), transparent 35%),
+    radial-gradient(circle at bottom left, rgba(20,184,166,.04), transparent 35%);
+
+  background-size:
+    28px 28px,
+    100% 100%,
+    100% 100%;
+
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow: hidden;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+::selection{
+    @apply bg-brass/25 text-white;
+}
+
+/* ---------------- Scrollbar ---------------- */
+
+::-webkit-scrollbar{
+    width:10px;
+    height:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2F3748;
+
+    border-radius:999px;
+
+    border:2px solid transparent;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#485167;
+
+}
+
+/* ---------------- Typography ---------------- */
+
+.tabular{
+
+    font-variant-numeric:tabular-nums;
+
+}
+
+.font-feature-ss01{
+
+    font-feature-settings:"ss01" 1;
+
+}
+
+/* ---------------- Glass ---------------- */
+
+.glass{
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(255,255,255,.05),
+    rgba(255,255,255,.015)
+    );
+
+    backdrop-filter:blur(22px);
+
+    -webkit-backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.06);
+
+}
+
+/* ---------------- Premium Cards ---------------- */
+
+.hover-card{
+
+    transition:
+
+    transform .35s cubic-bezier(.22,.61,.36,1),
+
+    border-color .35s,
+
+    box-shadow .35s,
+
+    background .35s;
+
+}
+
+.hover-card:hover{
+
+    transform:
+
+    translateY(-4px);
+
+    border-color:
+
+    rgba(212,175,55,.30);
+
+    box-shadow:
+
+    0 30px 70px rgba(0,0,0,.45),
+
+    0 0 0 1px rgba(212,175,55,.10);
+
+}
+
+/* ---------------- Focus ---------------- */
+
+input:focus,
+textarea:focus,
+select:focus{
+
+    outline:none;
+
+    box-shadow:
+
+    0 0 0 2px rgba(212,175,55,.18);
+
+}
+
+/* ---------------- Buttons ---------------- */
+
+button{
+
+    transition:
+
+    transform .25s,
+
+    box-shadow .25s,
+
+    opacity .25s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+button:active{
+
+    transform:translateY(0);
+
+}
+
+/* ---------------- Fade ---------------- */
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:
+
+translateY(12px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+
+translateY(0);
+
+}
+
+}
+
+.fade-up{
+
+animation:
+
+fadeUp .45s ease both;
+
+}
+
+/* ---------------- Soft Pulse ---------------- */
+
+@keyframes softPulse{
+
+0%,100%{
+
+box-shadow:
+
+0 0 0 0 rgba(212,175,55,0);
+
+}
+
+50%{
+
+box-shadow:
+
+0 0 0 5px rgba(212,175,55,.08);
+
+}
+
+}
+
+.soft-pulse{
+
+animation:
+
+softPulse 3.5s ease infinite;
+
+}
+
+/* ---------------- Floating ---------------- */
+
+@keyframes floatCard{
+
+0%,100%{
+
+transform:
+
+translateY(0);
+
+}
+
+50%{
+
+transform:
+
+translateY(-2px);
+
+}
+
+}
+
+.float-card{
+
+animation:
+
+floatCard 6s ease-in-out infinite;
+
+}
+
+/* ---------------- Page Animation ---------------- */
+
+.page-enter{
+
+animation:
+
+fadeUp .45s ease;
+
+}
