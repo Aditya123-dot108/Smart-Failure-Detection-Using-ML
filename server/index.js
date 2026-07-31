@@ -3,6 +3,30 @@ import express from 'express'
 import cors from 'cors'
 import pool from './db.js'
 
+const CREATE_TABLE_SQL = `
+CREATE TABLE IF NOT EXISTS projects (
+  id BIGSERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  sector TEXT NOT NULL,
+  business_model TEXT NOT NULL,
+  target_market TEXT,
+  budget_lakh NUMERIC,
+  description TEXT,
+  market JSONB,
+  risk JSONB,
+  recommendations JSONB,
+  readiness JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_projects_created_at ON projects (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_projects_sector ON projects (sector);
+`;
+
+await pool.query(CREATE_TABLE_SQL);
+console.log("Projects table is ready.");
+
 const app = express()
 const PORT = Number(process.env.PORT) || 4000
 const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
