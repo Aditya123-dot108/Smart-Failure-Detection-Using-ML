@@ -128,6 +128,16 @@ app.delete('/api/projects/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete project.' })
   }
 })
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Enterprise Startup Intelligence Suite API',
+    status: 'Running',
+    endpoints: [
+      '/api/health',
+      '/api/projects'
+    ]
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Project Intake API listening on http://localhost:${PORT}`)
