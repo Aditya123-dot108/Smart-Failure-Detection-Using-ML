@@ -4,7 +4,13 @@ import ProjectInput from './components/ProjectInput.jsx'
 import RiskAssessment from './components/RiskAssessment.jsx'
 import Recommendations from './components/Recommendations.jsx'
 import Dashboard from './components/Dashboard.jsx'
-import { generateMarketData, computeRisk, computeRecommendations, computeReadiness } from './utils/analysis.js'
+import {
+  generateMarketData,
+  computeRisk,
+  computeRecommendations,
+  computeReadiness,
+  analyzeProject
+} from './utils/analysis.js'
 import { saveProject } from './utils/api.js'
 
 export default function App() {
@@ -23,6 +29,13 @@ export default function App() {
     [submission, market, risk]
   )
   const readiness = useMemo(() => (risk ? computeReadiness(risk) : null), [risk])
+  const analysis = useMemo(() => {
+
+  if (!submission) return null;
+
+  return analyzeProject(submission);
+
+}, [submission]);
 
   async function handleAnalyze(form) {
     setSubmission(form)
@@ -34,6 +47,7 @@ export default function App() {
     const computedRisk = computeRisk(form, computedMarket)
     const computedRecommendations = computeRecommendations(computedRisk, computedMarket, form)
     const computedReadiness = computeReadiness(computedRisk)
+    const fullAnalysis = analyzeProject(form);
 
     setSaveState('saving')
     setSaveError(null)
@@ -90,9 +104,27 @@ export default function App() {
             <Recommendations recommendations={recommendations} />
           )}
 
-          {tab === 'dashboard' && market && readiness && risk && (
-            <Dashboard market={market} readiness={readiness} risk={risk} submission={submission} />
-          )}
+         {tab === 'dashboard' && market && readiness && risk && analysis && (
+
+  <Dashboard
+
+      market={market}
+
+      readiness={readiness}
+
+      risk={risk}
+
+      advancedRisk={analysis.advancedRisk}
+
+      swot={analysis.swot}
+
+      feasibility={analysis.feasibility}
+
+      submission={submission}
+
+  />
+
+)}
 
           {tab !== 'input' && !submission && (
             <div className="h-full flex items-center justify-center text-center text-fg-low text-sm px-6">

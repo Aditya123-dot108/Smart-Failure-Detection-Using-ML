@@ -1,4 +1,7 @@
 import { SECTORS } from '../data/sectors.js'
+import { calculateRisk } from './riskEngine'
+import { generateSWOT } from './swotEngine'
+import { calculateFeasibility } from './feasibilityEngine'
 
 const currentYear = new Date().getFullYear();
 
@@ -281,4 +284,73 @@ function levelFor(score) {
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value))
+}
+export function analyzeProject(input) {
+
+    // Existing Market Analysis
+    const market = generateMarketData(
+        input.sector,
+        Number(input.budgetLakh)
+    );
+
+    // Existing Risk Engine
+    const risk = computeRisk(input, market);
+
+    // New Risk Engine
+    const advancedRisk = calculateRisk({
+        sector: input.sector,
+        businessModel: input.businessModel,
+        budgetLakh: Number(input.budgetLakh),
+        competitors: market.competitors.length
+    });
+
+    // SWOT
+    const swot = generateSWOT({
+        sector: input.sector,
+        businessModel: input.businessModel,
+        budgetLakh: Number(input.budgetLakh),
+        competitors: market.competitors.length
+    });
+
+    // Feasibility
+    const feasibility = calculateFeasibility(
+        {
+            sector: input.sector,
+            businessModel: input.businessModel,
+            budgetLakh: Number(input.budgetLakh),
+            competitors: market.competitors.length
+        },
+        advancedRisk
+    );
+
+    // Existing Recommendations
+    const recommendations =
+        computeRecommendations(
+            risk,
+            market,
+            input
+        );
+
+    // Existing Readiness
+    const readiness =
+        computeReadiness(risk);
+
+    return {
+
+        market,
+
+        risk,
+
+        advancedRisk,
+
+        swot,
+
+        feasibility,
+
+        recommendations,
+
+        readiness
+
+    };
+
 }

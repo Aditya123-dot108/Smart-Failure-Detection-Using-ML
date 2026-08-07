@@ -10,9 +10,11 @@ import {
 
 import { Card } from './ui.jsx'
 import { inr } from '../utils/analysis.js'
+import SWOTAnalysis from './SWOTAnalysis'
+import FeasibilityCard from './FeasibilityCard'
 
 
-export default function Dashboard({ market, readiness, risk, submission }) {
+export default function Dashboard({ market, readiness, risk,advancedRisk,swot,feasibility, submission }) {
   const readinessLabel = readiness.overall >= 70 ? 'Strong' : readiness.overall >= 45 ? 'Developing' : 'Early Stage'
   const growthLabel = market.tamGrowth >= market.samGrowth + 3 ? 'High' : market.tamGrowth >= market.samGrowth ? 'Steady' : 'Cautious'
   const competitionLabel = market.topShare >= 28 ? 'Concentrated' : market.topShare >= 18 ? 'Moderate' : 'Fragmented'
@@ -40,6 +42,101 @@ export default function Dashboard({ market, readiness, risk, submission }) {
             <StatusBadge title="Verdict" value={recommendation} />
           </div>
         </div>
+        {/* Executive Summary */}
+
+<div className="mb-4 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 shadow-xl">
+
+    <div className="flex flex-col lg:flex-row justify-between gap-6">
+
+        <div>
+
+            <p className="text-sm uppercase tracking-[0.25em] text-cyan-400">
+
+                Startup Health Score
+
+            </p>
+
+            <div className="mt-3 flex items-end gap-3">
+
+                <span className="text-6xl font-bold text-white">
+
+                    {feasibility?.score ?? readiness.overall}%
+
+                </span>
+
+                <span className="text-green-400 text-xl mb-2">
+
+                    {feasibility?.grade}
+
+                </span>
+
+            </div>
+
+            <div className="mt-3 h-3 rounded-full bg-slate-700 overflow-hidden">
+
+                <div
+
+                    className="h-full bg-gradient-to-r from-cyan-400 via-green-400 to-emerald-500 transition-all duration-1000"
+
+                    style={{
+
+                        width: `${feasibility?.score ?? readiness.overall}%`
+
+                    }}
+
+                />
+
+            </div>
+
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+
+            <MetricCard
+
+                title="Investment"
+
+                value={feasibility?.investment}
+
+                color="text-green-400"
+
+            />
+
+            <MetricCard
+
+                title="Verdict"
+
+                value={feasibility?.verdict}
+
+                color="text-cyan-400"
+
+            />
+
+            <MetricCard
+
+                title="Launch"
+
+                value={feasibility?.readiness}
+
+                color="text-yellow-400"
+
+            />
+
+            <MetricCard
+
+                title="Risk"
+
+                value={risk.overallLevel}
+
+                color="text-red-400"
+
+            />
+
+        </div>
+
+    </div>
+
+</div>
 
         {/* Launch Score */}
         <div className="relative overflow-hidden rounded-xl2 border border-line bg-raised p-5 shrink-0 hover-card">
@@ -119,9 +216,24 @@ export default function Dashboard({ market, readiness, risk, submission }) {
             </div>
           </Card>
         </div>
-      </div>
-    </div>
-  )
+     </div>
+
+{/* SWOT Analysis */}
+
+<SWOTAnalysis
+    swot={swot}
+/>
+
+{/* Startup Feasibility */}
+
+<FeasibilityCard
+    feasibility={feasibility}
+/>
+
+</div>
+
+)
+
 }
 
 function MiniLedger({ label, value, dot }) {
@@ -165,6 +277,30 @@ function ReadinessGauge({ value }) {
   const radius = (size - stroke) / 2
   const circumference = Math.PI * radius
   const offset = circumference * (1 - value / 100)
+
+  function MetricCard({ title, value, color }) {
+
+    return (
+
+        <div className="rounded-xl border border-slate-700 bg-slate-800/70 p-4">
+
+            <div className="text-xs uppercase tracking-widest text-slate-400">
+
+                {title}
+
+            </div>
+
+            <div className={`mt-2 text-lg font-semibold ${color}`}>
+
+                {value}
+
+            </div>
+
+        </div>
+
+    );
+
+}
 
   return (
     <div className="flex flex-col items-center">
