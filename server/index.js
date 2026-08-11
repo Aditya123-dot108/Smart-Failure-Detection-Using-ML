@@ -128,6 +128,7 @@ app.delete('/api/projects/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete project.' })
   }
 })
+
 app.get('/', (req, res) => {
   res.json({
     message: 'Enterprise Startup Intelligence Suite API',
